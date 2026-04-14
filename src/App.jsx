@@ -4,7 +4,7 @@ import Login from "./pages/Login.jsx";
 import VerifyOtp from "./pages/VerifyOtp.jsx";
 import Movies from "./pages/Movies.jsx";
 import { ProtectedRoute, SecureRoute } from "./components/ProtectedRoute.jsx";
-
+import Seats from "./pages/Seats.jsx";
 export default function App() {
   const token = localStorage.getItem("access_token");
   return (
@@ -43,6 +43,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Movies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/seats/:showId"
+          element={
+            <ProtectedRoute>
+              <Seats />
             </ProtectedRoute>
           }
         />
