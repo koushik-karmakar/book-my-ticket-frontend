@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
-
+import { RefreshCw } from "lucide-react";
 const SEAT_PRICE = 500;
 
 export default function Seats() {
@@ -107,15 +107,29 @@ export default function Seats() {
   return (
     <div className="min-h-screen bg-[#0f0f1a]">
       <Navbar />
+
       <div
         className={`max-w-4xl mx-auto px-4 py-8 ${selected.length > 0 ? "pb-28" : ""}`}
       >
-        <div className="mb-6">
-          <h2 className="text-white text-xl font-bold">{movie?.title}</h2>
-          <p className="text-gray-400 text-sm mt-1">
-            {show?.screen_name} &bull;{" "}
-            {new Date(show?.show_time).toLocaleString()}
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-white text-xl font-bold">{movie?.title}</h2>
+            <p className="text-gray-400 text-sm mt-1">
+              {show?.screen_name} &bull;{" "}
+              {new Date(show?.show_time).toLocaleString()}
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              fetchSeats();
+              setSelected([]);
+              toast.success("Seats refreshed");
+            }}
+            className="flex items-center cursor-pointer gap-2 border border-[#333] hover:border-[#e94560] text-gray-400 hover:text-white text-sm px-4 py-2 rounded-lg transition"
+          >
+            <RefreshCw size={14} />
+            <span className="hidden sm:block">Refresh</span>
+          </button>
         </div>
 
         <div className="flex justify-center mb-6">
@@ -125,36 +139,39 @@ export default function Seats() {
           Screen
         </p>
 
-        <div className="flex flex-col items-center gap-2 mb-8">
-          {rows.map((row) => (
-            <div key={row} className="flex items-center gap-1.5">
-              <span className="text-gray-500 text-xs w-5 text-right shrink-0">
-                {row}
-              </span>
-              <div className="flex gap-1.5">
-                {seats
-                  .filter((s) => s.seat_row === row)
-                  .sort(
-                    (a, b) => parseInt(a.seat_number) - parseInt(b.seat_number),
-                  )
-                  .map((seat, idx) => (
-                    <>
-                      {idx === 5 && (
-                        <div key={`gap-${row}`} className="w-3 sm:w-5" />
-                      )}
+        <div className="flex flex-col items-center gap-1.5 mb-8 w-full">
+          {rows.map((row) => {
+            const rowSeats = seats
+              .filter((s) => s.seat_row === row)
+              .sort(
+                (a, b) => parseInt(a.seat_number) - parseInt(b.seat_number),
+              );
+
+            return (
+              <div
+                key={row}
+                className="flex items-center gap-1 w-full justify-center"
+              >
+                <span className="text-gray-500 text-xs w-4 text-right shrink-0">
+                  {row}
+                </span>
+                <div className="flex gap-1 sm:gap-1.5">
+                  {rowSeats.map((seat, idx) => (
+                    <div key={seat.id} className="flex items-center">
+                      {idx === 5 && <div className="w-2 sm:w-4 shrink-0" />}
                       <button
-                        key={seat.id}
                         onClick={() => toggleSeat(seat)}
-                        className={`w-8 h-8 sm:w-11 sm:h-11 rounded-md text-xs sm:text-sm font-semibold text-white transition-all ${getSeatStyle(seat)}`}
+                        className={`w-7 h-7 sm:w-12 sm:h-12 rounded text-[10px] sm:text-sm font-semibold text-white transition-all ${getSeatStyle(seat)}`}
                         title={`${seat.seat_row}${seat.seat_number}`}
                       >
                         {seat.seat_number}
                       </button>
-                    </>
+                    </div>
                   ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="flex items-center justify-center gap-4 sm:gap-6 mb-6">
