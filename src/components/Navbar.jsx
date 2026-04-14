@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Film, Ticket, LogOut } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -21,7 +20,10 @@ export default function Navbar() {
 
   return (
     <nav className="bg-[#1a1a2e] border-b border-[#333] px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-      <div className="flex items-center gap-2 text-[#e94560] font-bold text-xl">
+      <div
+        onClick={() => navigate("/movies")}
+        className="flex items-center gap-2 text-[#e94560] font-bold text-xl cursor-pointer"
+      >
         <Film size={22} />
         <span>BookMyTicket</span>
       </div>
@@ -31,14 +33,14 @@ export default function Navbar() {
         </span>
         <button
           onClick={() => navigate("/my-bookings")}
-          className="flex items-center gap-1 text-sm text-white border border-[#333] px-3 py-2 rounded-lg hover:border-[#e94560] transition"
+          className="flex items-center cursor-pointer gap-1 text-sm text-white border border-[#333] px-3 py-2 rounded-lg hover:border-[#e94560] transition"
         >
           <Ticket size={15} />
           <span className="hidden sm:block">My Bookings</span>
         </button>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-1 text-sm bg-[#e94560] text-white px-3 py-2 rounded-lg hover:bg-red-600 transition"
+          className="flex items-center cursor-pointer gap-1 text-sm bg-[#e94560] text-white px-3 py-2 rounded-lg hover:bg-red-600 transition"
         >
           <LogOut size={15} />
           <span className="hidden sm:block">Logout</span>
