@@ -67,7 +67,7 @@ export default function Movies() {
     <div className="min-h-screen bg-[#0f0f1a]">
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h2 className="text-white text-2xl font-bold mb-6">Now Showing</h2>
+        <h2 className="text-white text-2xl font-bold mb-6">Trending Shows</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <div
@@ -77,7 +77,7 @@ export default function Movies() {
               <img
                 src={movie.poster_url}
                 alt={movie.title}
-                className="w-full h-52 object-cover"
+                className="w-full object-contain bg-black"
               />
               <div className="p-5">
                 <h3 className="text-white font-bold text-lg mb-2">
