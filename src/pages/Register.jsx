@@ -82,7 +82,9 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#e94560] hover:bg-red-600 text-white cursor-pointer font-semibold py-3 rounded-lg mt-2 transition disabled:opacity-50"
+            className={`bg-[#e94560] hover:bg-red-600 text-white font-semibold py-3 rounded-lg mt-2 transition disabled:opacity-50 ${
+              loading ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
           >
             {loading ? "Creating account..." : "Register"}
           </button>
