@@ -19,7 +19,7 @@ export default function Login() {
     try {
       const backend = import.meta.env.VITE_API_URL;
       const res = await axios.post(`${backend}/api/auth/login`, form);
-      console.log("backnd", backend);
+      
       const { access_token, refresh_token, user } = res.data.data;
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
